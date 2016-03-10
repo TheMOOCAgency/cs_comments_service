@@ -98,7 +98,8 @@ class Comment < Content
       as_document.slice(*%w[body course_id endorsed endorsement anonymous anonymous_to_peers created_at updated_at at_position_list])
                  .merge("id" => _id)
                  .merge("user_id" => author_id)
-                 .merge("username" => author_username) 
+                 .merge("username" => author_username)
+                 .merge("profile_image" => self.author.profile_image)
                  .merge("depth" => depth)
                  .merge("closed" => comment_thread.nil? ? false : comment_thread.closed) # ditto
                  .merge("thread_id" => comment_thread_id)

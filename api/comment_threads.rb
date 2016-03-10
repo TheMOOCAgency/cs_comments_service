@@ -28,7 +28,7 @@ get "#{APIPREFIX}/threads/:thread_id" do |thread_id|
   end
 
   if params["user_id"] and bool_mark_as_read
-    user = User.only([:id, :username, :read_states]).find_by(external_id: params["user_id"])
+    user = User.only([:id, :username, :read_states, :profile_image]).find_by(external_id: params["user_id"])
     user.mark_as_read(thread) if user
   end
 

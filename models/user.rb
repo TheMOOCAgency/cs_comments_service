@@ -8,6 +8,7 @@ class User
   field :external_id, type: String
   field :username, type: String
   field :default_sort_key, type: String, default: "date"
+  field :profile_image, type: String
 
   embeds_many :read_states
   has_many :comments, inverse_of: :author
@@ -17,6 +18,7 @@ class User
 
   validates_presence_of :external_id
   validates_presence_of :username
+
   validates_uniqueness_of :external_id
   validates_uniqueness_of :username
 
@@ -35,7 +37,7 @@ class User
   end
 
   def to_hash(params={})
-    hash = as_document.slice(*%w[username external_id])
+    hash = as_document.slice(*%w[username external_id profile_image])
     if params[:complete]
       hash = hash.merge("subscribed_thread_ids" => subscribed_thread_ids,
                         "subscribed_commentable_ids" => [], # not used by comment client.  To be removed once removed from comment client.
