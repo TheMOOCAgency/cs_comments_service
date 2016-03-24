@@ -126,6 +126,7 @@ helpers do
     filter_flagged,
     filter_unread,
     filter_unanswered,
+    filter_tobeapproved,
     sort_key,
     sort_order,
     page,
@@ -158,6 +159,22 @@ helpers do
           
         comment_threads = comment_threads.where({"thread_type" => :question}).nin({"_id" => endorsed_thread_ids})
       end
+    end
+
+    if filter_tobeapproved
+      self.class.trace_execution_scoped(['Custom/handle_threads_query/find_tobeapproved']) do
+        # TODO replace with aggregate query?
+        comment_ids = Comment.where(:course_id => course_id).
+            where(:approved => false).
+            collect{|c| c.comment_thread_id}.uniq
+
+        thread_ids = comment_threads.where(:approved => false).
+            collect{|c| c.id}
+
+        comment_threads = comment_threads.in({"_id" => (comment_ids + thread_ids).uniq})
+      end
+    else
+      comment_threads = comment_threads.or({:approved => true}, {:author_id => user_id})
     end
 
     sort_criteria = get_sort_criteria(sort_key, sort_order)

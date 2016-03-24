@@ -8,6 +8,7 @@ class Content
   field :historical_abuse_flaggers, type: Array, default: [] #preserve abuse flaggers after a moderator unflags
   field :author_username, type: String, default: nil
   field :profile_image, type: String, default: nil
+  field :approved, type: Boolean, default: false
 
   index({_type: 1, course_id: 1, pinned: -1, created_at: -1 }, {background: true} )
   index({_type: 1, course_id: 1, pinned: -1, comment_count: -1, created_at: -1}, {background: true})

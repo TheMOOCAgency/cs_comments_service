@@ -13,6 +13,7 @@ get "#{APIPREFIX}/threads" do # retrieve threads by course
     value_to_boolean(params["flagged"]),
     value_to_boolean(params["unread"]),
     value_to_boolean(params["unanswered"]),
+    value_to_boolean(params["tobeapproved"]),
     params["sort_key"],
     params["sort_order"],
     params["page"],
@@ -51,7 +52,16 @@ get "#{APIPREFIX}/threads/:thread_id" do |thread_id|
 end
 
 put "#{APIPREFIX}/threads/:thread_id" do |thread_id|
+  puts params
   filter_blocked_content params["body"]
+  if params["approved"] == "true"
+    thread.approved= true
+  end
+  if params["approved"] == "false"
+    thread.approved= false
+  end
+  puts thread
+
   thread.update_attributes(params.slice(*%w[title body pinned closed commentable_id group_id thread_type]))
 
   if thread.errors.any?

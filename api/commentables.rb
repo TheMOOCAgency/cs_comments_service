@@ -17,6 +17,7 @@ get "#{APIPREFIX}/:commentable_id/threads" do |commentable_id|
     value_to_boolean(params["flagged"]),
     value_to_boolean(params["unread"]),
     value_to_boolean(params["unanswered"]),
+    value_to_boolean(params["tobeapproved"]),
     params["sort_key"],
     params["sort_order"],
     params["page"],

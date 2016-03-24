@@ -84,6 +84,7 @@ get "#{APIPREFIX}/search/threads" do
       value_to_boolean(local_params["flagged"]),
       value_to_boolean(local_params["unread"]),
       value_to_boolean(local_params["unanswered"]),
+      value_to_boolean(params["tobeapproved"]),
       local_params["sort_key"],
       local_params["sort_order"],
       local_params["page"],

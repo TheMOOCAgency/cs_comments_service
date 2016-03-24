@@ -95,7 +95,7 @@ class Comment < Content
       subtree_hash = subtree(sort: sort_by_parent_and_time)
       self.class.hash_tree(subtree_hash).first
     else
-      as_document.slice(*%w[body course_id endorsed endorsement anonymous anonymous_to_peers created_at updated_at at_position_list])
+      as_document.slice(*%w[body course_id endorsed endorsement anonymous anonymous_to_peers created_at updated_at at_position_list approved])
                  .merge("id" => _id)
                  .merge("user_id" => author_id)
                  .merge("username" => author_username)

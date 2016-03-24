@@ -118,7 +118,7 @@ class CommentThread < Content
   end
 
   def to_hash(params={})
-    as_document.slice(*%w[thread_type title body course_id anonymous anonymous_to_peers commentable_id created_at updated_at at_position_list closed])
+    as_document.slice(*%w[thread_type title body course_id anonymous anonymous_to_peers commentable_id created_at updated_at at_position_list closed approved])
                      .merge("id" => _id, "user_id" => author_id,
                             "username" => author_username,
                             "profile_image" => self.author.profile_image,
